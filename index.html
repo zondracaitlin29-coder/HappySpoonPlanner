@@ -4,6 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Happy Spoon Planner 🥄</title>
+
+
+  <!-- ── PWA: meta tags ──────────────────────────────── -->
+  <meta name="application-name"                content="Happy Spoon" />
+  <meta name="apple-mobile-web-app-capable"    content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title"      content="Happy Spoon" />
+  <meta name="description"                     content="Simple, affordable baby meal planner for South African families." />
+  <meta name="mobile-web-app-capable"          content="yes" />
+  <meta name="theme-color"                     content="#F2C4CE" />
+  <meta name="msapplication-TileColor"         content="#F2C4CE" />
+  <meta name="msapplication-tap-highlight"     content="no" />
+
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1318,5 +1331,134 @@ function showToast(msg) {
 
 </script>
 <div id="toast"></div>
+
+
+
+<script>
+/* ═══════════════════════════════════════════
+   HAPPY SPOON — SINGLE-FILE PWA BOOTSTRAP
+   Icons, manifest, SW — all inline.
+═══════════════════════════════════════════ */
+(function() {
+
+  var ICON32  = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAA60lEQVR42mNkwAJ+vXr7n4EGgE1MmBFdjJEeFuNzCCM2y3/cekgTiznU5DEcwYhsOa0sxuUQNjFhRhb8QSWEU45dWqIy1VWvFsafsmAXFy61v169w2kOIzbf47MYZjmMjewIUhwCCwUmUoMvJ8HtG8xSdMth8qSYx0RKsCMDbJYTTv1ChB1AbzD0HIAvkREjjw5YyHE1zBLkBEeqxaNpYNQBow4YdcCoA0YdMHgdgK8Bia/pRUxTDJvZAx8CsA4Ccqfh16t3RIcEMQDdPOR+AUUdk6KyCHiw93WtILpBguGAAe+aDYrO6UB1zwGRiG1V9OD2ngAAAABJRU5ErkJggg==";
+  var ICON180 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAEuUlEQVR42u3dO27UUBSAYfsqihBlIqWlo2QXsA4aOrZAxRboaFgH7IKSjhYJSoRoQoVERCbjx30ef3+JEBjPNydnPJ5hnjro97fvt5OG7/Lmem59DDPAigR8hliRcM8QKxLuGWRFgp1gVqSLATPIijStE8yKNK1nkBVpWieYFWlaJ5gVCXWCWZFQJ5gVCXWCWZFQJ5gVCfU8IuZfX756hCv06OmT7o7p3CW9i95PKrx9nfsekS+e0C2nM8im95YpPfeEGWK496LuYuUAOcZq0sM6klpPZ5hj79ylOmV0boUZZGtIidXjYvRn8uXNFT1ZJ9+PbI9xixVkrj2d92IGeCzgNVD/O6Wrgt6KGeKxcZdG3QT0FsyjQn798sXPpb/33YePj48AuyTqe0H3hHk0yGsARwK+FnYN1MVBR8WcE/HIuHtBXQV0RMw1II8GuwfUd0C3xmwqH29al0JdBHQ0zA9Bfv/p89v7fv3V82dvTOu6qJuDHhnzKcg1YEdBPQTo6JiXQi4NG+oToGEujxnqeqjTpK5e/EU8zpplAx1lOu/dmR8qx58xEuqlj3XOm9VSj/9Axan2Y55gHv9HeO/HXfOxzwI6ws36o++jox9/LkMp2jO0VDmuUJR6s8XqkRG0j1Kppymdojwza/y43jNha0xnu/QA35zU6+rR8q1vAV0dNsgBQR/hujO4603k+mR59h3aC0L19sLQvRwKFdAC2v6sXm2Y0NOY340R+d8BtAS0gLZ2OH6goXDcQEtAH3Hamc5Ah0ECM9BhsMAMdBg0MAMdBg/MD+cG/xWIfJ2uCW1aw2xCm9YgA91wah71Pw2yclhFYAZaAlpAS0BLQEtAS0ALaAlo7X1TxJsqQEtAC2gJaAloCWgJaAEtAS0BLQEtAS2gJaAloCWgBbQEtAS0BLQEtIDW3rZ+ctsnvoGWgBbQEtAS0BLQEtACWgJaAloCWgJaQEtAS0BLQEtAC2gJaAloCWgBLQGte1r7lQS+wgBoCWgBLQEtAS0BLQEtoCWgJaAloCWgBbR0ZNC/v/1wdlXdhgktE1oKCfrR0yfOoLK211TRCW2PVm0TVg5ZOaTDgrZ2qKaF3aC9MPy/pZ/k9onv/JZSlGemTOdsoE1p9WIoRXuG6rjTuSpoqGEeCvTSHxlQw1xyZXUdWqFKlzfXsymtCNP58uZ6zj6hoVYLzF2sHFB7ETgE6DXPPKiPibnUexfp7+7RGjXYY0Nujfmv4aIrx9oDhzr+ilH6XeXiO/RRUZ+78SjCjUm9Yb4DusTasQe1aR1nxSiN+V+7890D/X5b8kT8+vJ14wFfDQ3g9csXPyNM5q1DpvRkbgZ6D+oouI+CuOaacRL0KKgB7xdwS8zNQOdGrf6qdY/8WdA1UYMNck7M03Tisl3JKx4tT4BiY56mabro6USY1iDvbX74BUK91cMqAvHe6XwWdGvUYIO8dh2+GPEEQu71zeYJ3cOUlpZM52laeHNSzase0h6DKfcfKLXCvAo01Ood82rQUKtnzJtAQ61eMW8GDbV6xDxNCy/bnctlPbWGvHtCm9bqDXO2CW1aq5dhmHo/QMHcdEKb1mo59KpNU7ghrvH3NFkP4IY4FGjAAS7VH5RUmH2G1TpeAAAAAElFTkSuQmCC";
+  var ICON192 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAFV0lEQVR42u3dO27cSBRAUZIQBMOhBCh15nB2MV6HE2fegqPZgrJJvA7PLiZ05lSAHAqGEjmSYc3o02zW5xXfubE/avLeesWm2D1Pwbi9ur6bsFtOL87nSD/PTHZkjmImPTLHMBMfmUOYiY/MIczER+YQZuIjcwgL+TESpR2biY/M02AhPzJPg4X8yBzBQn5kjmAhPzJHsJAfmSNYyI/MESzkR+YI5tHl//H1mzPekVdv34T92Q65TzCPJj/hBVEygpMRDirpx+H3cxV5Ohw0AXqv/sQ3FWpPgTmi/MQXQqsIQm2BiJ9jexRpazRHWP2JbyL0mgJLlFUBuS+Yw0yAlqt/rQNwenHGrgrcXn0ffhL8dwp0CaC0+ITfRxAtQng2gJHkH1H6j+/f3az585efv7zOFkPrCJoGsFX+0aRfK/xegtgaQ+0IHg2A/DGlHzWGUSJoEsAW+YmfN4SaEdwHsEQ+eOSP/X/v4RzOEVf/0cX/+59//3rq73z4849PpkGcKVA1gGzyPyd+qxBEsC6Aalsg8j/P2j+feUtU847xMvKBGVV+EcQ511UCWFtsRvlFcFbVqYMD6P3QS2b5RdD33N9eXd8VnwBrSvU2p599jQM1psAyAYkpGoDV32sYbQos0V8wctDLiWIB7PHJrpdWzlI3s2reHd7TJKvh2pKl9FpslbeF/KZAkABGkn/NinmsxK3lH2EKtHakSAAebF8vs5U/hnMnDmX5CHr9NigCB5DpnR+Sb3el1idQdL8IBiKxOQD7f4x8HdBkArjxhajO2ALBFggQAB4w0qeyZX5N4QOw/0dkd0yAJCum1V8AgAAyrpxWfwEAAsi4glr9BZBWJPILIK1Q5BdAWrHIL4C0gpFfAGlFI/96PBJZQLjeD5sT3wRIu/KS3wRIOQ2IL4Dw0yDr9wTbAqGosJefv7wmvwAAAQACAAQACAAQACAAQACAAAABAAIABAAIoBtbf4nNL8EJABAAIABAAIAAAAEAAgAEAAgAEAAgAEAAgAAAAQACAAQACAAQACAACMAhgAAAAQACAAQACAAQACAAQACAAAABAAIABIDDOPYz/n03gAAAAQACAAQACAAQACAAQACAAAABAAIABAAIABAAIABAAIAAAAEAAgAEAAEAAgAEAAgAEAAggDLcXn13lBHWHRMAJgAgAEAArgOQZ/9fJIBXb984W+hCCfdsgRqx9rP+fTfAzq4BbIMQ0RUTACaA6wBk3P83nwC2QYjmyLL3FwjyNwnANgijbX+6XQSbAojixNKrTBHgGBdK7zS8DYrUFA/AFMAoq/80TdNyenE+Z9z7Ie++/57Ti/O5yhZobakiIH+P1T/UNYAIyL+La4AtxYqA/C1X/+oTQASILP+vAGpeCB8bgRD2JX40+e+dX/a2YsA5DHcRvKVk0yDXqt9q6/O/AGrfD9j6gvYQwaGPOY7+OOTWc1Vb/t9dnx/+4Nd3tQ/Oj6/fCr2Is2EF+fj+3c3e5C+1QLVY+Z8MYLQIRo7hsQhGk7/0VG4tf7cAaoWwh+mQ8YK25bMkLwawlwgwBj3lf3ARnOEAIK/8TzE/Pe7aTQHTgPg9Vv9pmqaTiAdGCMTvPgF6TQETgfitVv8XA4gQgRCIX0v+cFugQw6kGEjfbAsUaQqYDoQvvfofHED0CIBj5J+mFfcBej88D9Rwdan1DwPR5V8dgAiwJ/mPCkAE2Iv8RwcgAuxB/k0BiACjy785ABFgZPmnacV9gENwrwCjiF9sApgGGFX+4hPANMAo4lcPQAgYYVfRbMsiBETcTjffswsBka4jO387jBjQ982TcO/aiILsLfkJbpW3iI4pPYMAAAAASUVORK5CYII=";
+  var ICON512 = "data:image/png;base64,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";
+
+  /* 1 ── Favicon + Apple touch icon ──────── */
+  var fav = document.createElement('link');
+  fav.rel = 'icon'; fav.type = 'image/png'; fav.href = ICON32;
+  document.head.appendChild(fav);
+
+  var apple = document.createElement('link');
+  apple.rel = 'apple-touch-icon'; apple.href = ICON180;
+  document.head.appendChild(apple);
+
+  /* 2 ── Web App Manifest (blob URL) ─────── */
+  var manifest = {
+    name: 'Happy Spoon Planner',
+    short_name: 'Happy Spoon',
+    description: 'Simple, affordable baby meal planner',
+    start_url: './',
+    scope: './',
+    display: 'standalone',
+    orientation: 'portrait',
+    background_color: '#FDF6EE',
+    theme_color: '#F2C4CE',
+    icons: [
+      { src: ICON192, sizes: '192x192', type: 'image/png', purpose: 'any maskable' },
+      { src: ICON512, sizes: '512x512', type: 'image/png', purpose: 'any maskable' }
+    ]
+  };
+  var mBlob = new Blob([JSON.stringify(manifest)], {type:'application/manifest+json'});
+  var mLink = document.createElement('link');
+  mLink.rel = 'manifest'; mLink.href = URL.createObjectURL(mBlob);
+  document.head.appendChild(mLink);
+
+  /* 3 ── Service Worker (blob URL) ───────── */
+  if ('serviceWorker' in navigator) {
+    var sw = [
+      '"use strict";',
+      'var C="happy-spoon-v1";',
+      'self.addEventListener("install",function(e){',
+      '  self.skipWaiting();',
+      '});',
+      'self.addEventListener("activate",function(e){',
+      '  e.waitUntil(caches.keys().then(function(k){',
+      '    return Promise.all(k.filter(function(n){return n!==C;}).map(function(n){return caches.delete(n);}));',
+      '  }));',
+      '  self.clients.claim();',
+      '});',
+      'self.addEventListener("fetch",function(e){',
+      '  e.respondWith(caches.match(e.request).then(function(r){',
+      '    return r||fetch(e.request).then(function(res){',
+      '      if(!res||res.status!==200)return res;',
+      '      var cl=res.clone();',
+      '      caches.open(C).then(function(c){c.put(e.request,cl);});',
+      '      return res;',
+      '    }).catch(function(){return r;});',
+      '  }));',
+      '});'
+    ].join('\n');
+    var swBlob = new Blob([sw], {type:'application/javascript'});
+    navigator.serviceWorker.register(URL.createObjectURL(swBlob), {scope:'./'})
+      .then(function(r){ console.log('[HappySpoon] SW ready'); })
+      .catch(function(e){ console.log('[HappySpoon] SW skipped:', e.message); });
+  }
+
+  /* 4 ── Install Banner ───────────────────── */
+  var _dp = null;
+  window.addEventListener('beforeinstallprompt', function(e) {
+    e.preventDefault(); _dp = e; _banner();
+  });
+  window.addEventListener('appinstalled', function() {
+    var b = document.getElementById('hs-pwa-banner');
+    if (b) b.remove();
+    if (typeof showToast === 'function') showToast('Installed! Find Happy Spoon on your home screen.');
+  });
+
+  function _banner() {
+    if (document.getElementById('hs-pwa-banner')) return;
+    if (sessionStorage.getItem('hs-pwa-dismissed')) return;
+    var sty = document.createElement('style');
+    sty.textContent = '@keyframes hsSU{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}';
+    document.head.appendChild(sty);
+    var d = document.createElement('div');
+    d.id = 'hs-pwa-banner';
+    d.innerHTML =
+      '<div style="display:flex;align-items:center;gap:11px;flex:1">'
+        +'<img src="'+ICON192+'" style="width:40px;height:40px;border-radius:10px;flex-shrink:0"/>'
+        +'<div><div style="font-weight:700;font-size:13.5px;color:#3D2B20;font-family:DM Sans,sans-serif">Add to Home Screen</div>'
+        +'<div style="font-size:11.5px;color:#A88B7F;margin-top:2px;font-family:DM Sans,sans-serif">Install Happy Spoon for offline access</div></div>'
+      +'</div>'
+      +'<button id="hs-install" style="padding:9px 18px;background:linear-gradient(135deg,#E8A0B0,#F2C4CE);color:#fff;border:none;border-radius:50px;font-family:DM Sans,sans-serif;font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap;flex-shrink:0">Install</button>'
+      +'<button id="hs-dismiss" style="padding:8px;background:none;border:none;color:#A88B7F;font-size:18px;cursor:pointer;flex-shrink:0;line-height:1">&#10005;</button>';
+    Object.assign(d.style,{
+      position:'fixed',bottom:'72px',left:'50%',
+      transform:'translateX(-50%)',
+      width:'calc(100% - 28px)',maxWidth:'480px',
+      background:'rgba(255,255,255,0.97)',
+      backdropFilter:'blur(18px)',WebkitBackdropFilter:'blur(18px)',
+      borderRadius:'18px',padding:'13px 14px',
+      display:'flex',alignItems:'center',gap:'10px',
+      boxShadow:'0 8px 32px rgba(61,43,32,0.15)',
+      zIndex:'9000',border:'1px solid rgba(242,196,206,0.55)',
+      animation:'hsSU 0.38s cubic-bezier(.4,0,.2,1)'
+    });
+    document.body.appendChild(d);
+    document.getElementById('hs-install').onclick = function() {
+      if (!_dp) return;
+      _dp.prompt();
+      _dp.userChoice.then(function() { _dp=null; d.remove(); });
+    };
+    document.getElementById('hs-dismiss').onclick = function() {
+      d.remove(); sessionStorage.setItem('hs-pwa-dismissed','1');
+    };
+  }
+
+})();
+</script>
+
 </body>
 </html>
